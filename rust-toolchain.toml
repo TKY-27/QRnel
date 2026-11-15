@@ -1,0 +1,5 @@
+[toolchain]
+channel = "1.99.1"
+profile = "minimal"
+targets = ["i586-unknown-linux-gnu"]
+components = ["llvm-tools", "rustfmt"]

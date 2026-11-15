@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Third-party licenses · QRnel</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="licenses">
+    <header class="masthead">
+      <h1>Third-party licenses</h1>
+      <a href="./">Back to QRnel</a>
+    </header>
+    <h2>v86 0.5.473</h2>
+    <p>Copyright © 2012, the v86 contributors. <a href="./vendor/v86-LICENSE.txt">BSD 2-Clause license</a>.</p>
+    <p>Includes QEMU-derived floppy controller code (<a href="./vendor/v86-FDC-LICENSE.txt">MIT</a>), Berkeley SoftFloat Release 3e (<a href="./vendor/SoftFloat-LICENSE.txt">BSD 3-Clause</a>) and Zstandard 1.4.5 with xxHash (<a href="./vendor/Zstandard-LICENSE.txt">BSD license</a>).</p>
+    <p>Zstandard and xxHash: Copyright (c) 2012–2020, Yann Collet, Facebook, Inc.</p>
+    <p>Includes filesystem, 9p and UART code derived from Sebastian Macke's <a href="./vendor/jor1k-LICENSE.txt">jor1k (BSD 2-Clause)</a>.</p>
+    <h2>Rust runtime components</h2>
+    <p>v86's WebAssembly includes Rust's standard library and dependencies. <a href="./vendor/Rust-LICENSE-MIT.txt">Rust MIT license</a>, <a href="./vendor/Rust-Unicode-LICENSE.txt">Unicode data</a>, <a href="./vendor/Rust-libm-LICENSE.txt">libm notices</a>, <a href="./vendor/Rust-dlmalloc-LICENSE.txt">dlmalloc</a> and <a href="./vendor/Rust-hashbrown-LICENSE.txt">hashbrown</a>.</p>
+    <p><a href="./vendor/Rust-builtins-LICENSE.txt">Compiler builtins license</a> and <a href="./libm-notices.txt">libm's Sun Microsystems and FreeBSD notices</a>.</p>
+    <h2>SeaBIOS 1.16.2</h2>
+    <p>SeaBIOS and SeaVGABIOS run as firmware in the virtual machine. <a href="./vendor/SeaBIOS-COPYING.LESSER">GNU LGPL v3</a>, <a href="./vendor/SeaBIOS-COPYING">GNU GPL v3</a>, <a href="./vendor/seabios-rel-1.16.2.tar.gz">corresponding source archive</a> and <a href="./vendor/seabios.config">build configuration</a>.</p>
+    <p>To rebuild the release firmware, extract the source archive, copy <code>seabios.config</code> to <code>.config</code> in the source directory and run <code>make</code> there. The outputs are <code>out/bios.bin</code> and <code>out/vgabios.bin</code>. The <a href="./vendor/fetch-and-build-seabios.sh">upstream build script</a> records the release and debug variants.</p>
+    <h2>jsQR 1.4.0</h2>
+    <p>Copyright © jsQR contributors. <a href="./vendor/jsQR-LICENSE.txt">Apache 2.0 license</a>.</p>
+  </main>
+</body>
+</html>

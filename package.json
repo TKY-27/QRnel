@@ -1,0 +1,21 @@
+{
+  "name": "qrnel",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/browser-build.mjs",
+    "serve": "node scripts/browser-serve.mjs",
+    "verify:qr": "node scripts/qr-verify.mjs",
+    "test:browser": "playwright test --config scripts/browser-test.config.mjs"
+  },
+  "dependencies": {
+    "jsqr": "1.4.0",
+    "v86": "0.5.473"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1",
+    "pngjs": "7.0.0",
+    "qrcode": "1.5.4"
+  }
+}

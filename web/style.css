@@ -1,0 +1,322 @@
+:root {
+  color-scheme: light;
+  --ink: #111;
+  --muted: #555;
+  --rule: #c8c8c8;
+  --link: #0b57d0;
+  --error: #b3261e;
+  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  --control: 2.25rem;
+  --page-pad: 1rem;
+  /* 1.5 CSS px per QR module (185 with quiet zone), 3 device px on 2x displays, plus a 1px border. */
+  --panel: calc(277.5px + 2px);
+  --gap: 2rem;
+  --screen-pad: .75rem;
+  /* Space above and below the screen: masthead, machine bar, help line, page padding. */
+  --chrome: 10rem;
+  font: 100%/1.45 var(--sans);
+  color: var(--ink);
+  background: #fff;
+}
+
+* { box-sizing: border-box; }
+
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  container-type: inline-size;
+}
+
+h1, h2, h3, p, figure, dl, dd { margin: 0; }
+
+button, input { font: inherit; color: inherit; }
+
+button {
+  min-height: var(--control);
+  padding: .25rem .75rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: #f6f6f6;
+  font-size: .875rem;
+  cursor: pointer;
+}
+
+button:hover:enabled { background: #ececec; border-color: #a8a8a8; }
+
+button:active:enabled, button[aria-pressed='true'] { background: #e2e2e2; border-color: #999; }
+
+button:disabled {
+  color: #8a8a8a;
+  border-color: #ddd;
+  cursor: default;
+}
+
+:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+}
+
+a { color: var(--link); }
+
+kbd {
+  font: .75rem/1 var(--mono);
+  padding: .0625rem .25rem;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.page {
+  width: fit-content;
+  margin-inline: auto;
+  padding: 0 var(--page-pad) var(--page-pad);
+}
+
+.masthead {
+  /* Never widen the page; the bench below sets its width. */
+  width: 0;
+  min-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .25rem 1rem;
+  padding-block: .875rem;
+}
+
+h1 { font-size: 1.25rem; line-height: 1.2; font-weight: 600; }
+
+h2 { font-size: 1rem; line-height: 1.3; font-weight: 600; }
+
+h3 { font-size: .875rem; line-height: 1.4; font-weight: 600; }
+
+.masthead p:not(.links) { color: var(--muted); font-size: .875rem; }
+
+.masthead .links { margin-left: auto; }
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem 1rem;
+  font-size: .875rem;
+}
+
+.bench {
+  display: grid;
+  grid-template-columns: min-content var(--panel);
+  gap: var(--gap);
+  align-items: start;
+}
+
+.machine-bar {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  white-space: nowrap;
+  margin-bottom: .5rem;
+}
+
+.power {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: .875rem;
+}
+
+.power[data-on='true'] { color: var(--ink); }
+
+.screen {
+  /* The guest's real 80x25 text page sets the size; font size fits the free width and height. */
+  --fs: clamp(6px, min((100cqw - 2 * var(--page-pad) - var(--panel) - var(--gap) - 2 * var(--screen-pad)) / 49.6,
+    (100dvh - var(--chrome)) / 31.25), 20px);
+  position: relative;
+  width: calc(80ch + 2 * var(--screen-pad));
+  max-width: 100%;
+  height: calc(31.25em + 2 * var(--screen-pad));
+  font: var(--fs)/1.25 var(--mono);
+}
+
+.screen-idle {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: .25rem;
+  padding: 1rem;
+  border: 1px solid var(--rule);
+  background: #fafafa;
+  text-align: center;
+  font: .875rem/1.45 var(--sans);
+  color: var(--muted);
+}
+
+.screen-idle strong { color: var(--ink); font-weight: 600; }
+
+.guest {
+  position: absolute;
+  inset: 0;
+  padding: var(--screen-pad);
+  overflow: auto;
+  background: #000;
+}
+
+.guest:focus { outline: 2px solid var(--link); outline-offset: 2px; }
+
+.guest > div { white-space: pre; }
+
+.guest canvas { max-width: 100%; image-rendering: pixelated; }
+
+.keys {
+  margin-top: .5rem;
+  color: var(--muted);
+  font-size: .8125rem;
+  line-height: 1.5;
+}
+
+.machine:has(.guest[hidden]) .keys { display: none; }
+
+/* Line the heading up with the centred machine heading beside it. */
+.media { padding-top: .45rem; }
+
+.media h2 { margin-bottom: .5rem; }
+
+.source-frame {
+  box-sizing: content-box;
+  width: 277.5px;
+  max-width: calc(100% - 2px);
+  border: 1px solid var(--rule);
+  background: #fff;
+}
+
+.source img, .source video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.source img { image-rendering: pixelated; }
+
+/* Show the whole camera frame so no part of a QR code is cut off. */
+.source video { object-fit: contain; background: #000; }
+
+#preview[data-mirrored='true'] { transform: scaleX(-1); }
+
+.source figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: .25rem;
+  color: var(--muted);
+  font-size: .75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.media[data-dragging='true'] .source-frame {
+  outline: 2px dashed var(--link);
+  outline-offset: 3px;
+}
+
+#boot-sample { width: 100%; margin-top: .75rem; }
+
+.media-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .5rem;
+  margin-top: .5rem;
+}
+
+.media h3 {
+  margin-top: .875rem;
+  padding-top: .625rem;
+  border-top: 1px solid #e2e2e2;
+}
+
+.verification {
+  display: grid;
+  gap: .125rem;
+  margin-top: .25rem;
+  font-size: .8125rem;
+}
+
+.verification > div {
+  display: grid;
+  grid-template-columns: 6.25rem minmax(0, 1fr);
+  gap: .5rem;
+}
+
+.verification dt { color: var(--muted); }
+
+.verification summary { font-family: var(--mono); cursor: pointer; }
+
+.verification code {
+  display: block;
+  font: .75rem/1.4 var(--mono);
+  overflow-wrap: anywhere;
+  user-select: all;
+}
+
+.status {
+  min-height: 2.9em;
+  margin-top: .5rem;
+  font-size: .8125rem;
+}
+
+.status[data-error='true'] { color: var(--error); }
+
+noscript p { margin-top: 1rem; }
+
+/* Third-party notices */
+.licenses {
+  width: min(100%, 42rem);
+  margin-inline: auto;
+  padding: 0 var(--page-pad) 3rem;
+}
+
+.licenses .masthead a { font-size: .875rem; }
+
+.licenses h2 { margin-top: 1.5rem; }
+
+.licenses .masthead + h2 { margin-top: .5rem; }
+
+.licenses h2 + p { margin-top: .25rem; }
+
+@media (pointer: coarse) {
+  :root { --control: 2.75rem; --chrome: 11rem; }
+}
+
+@media (max-width: 56rem) {
+  .page { width: auto; max-width: 44rem; }
+
+  .masthead .links { margin-left: 0; }
+
+  .bench {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .screen {
+    --fs: clamp(6px, (100cqw - 2 * var(--page-pad) - 2 * var(--screen-pad)) / 49.6, 16px);
+  }
+
+  .media { max-width: 26rem; padding-top: 0; }
+
+  /* While the machine is off, put the boot controls first on narrow screens. */
+  .bench:has(.guest[hidden]) .media { order: -1; }
+}
+
+@media (max-width: 30rem) {
+  :root { --screen-pad: .5rem; }
+
+  /* Use the full phone width so all 80 columns stay visible. */
+  .screen {
+    --fs: clamp(6px, (100cqw - 2 * var(--screen-pad)) / 49.6, 16px);
+    width: auto;
+    max-width: none;
+    margin-inline: calc(-1 * var(--page-pad));
+  }
+
+  .screen-idle { border-inline: 0; }
+
+  .guest:focus { outline-offset: -2px; }
+}

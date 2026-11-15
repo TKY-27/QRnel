@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Boot a tiny Rust operating system from a single QR code in your browser.">
+  <title>QRnel</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="page">
+    <header class="masthead">
+      <h1>QRnel</h1>
+      <p>A Rust operating system stored in one QR code, verified and booted in a real x86 emulator.</p>
+      <p class="links">
+        <a href="./qrnel.png" download>Download QR image</a>
+        <a href="./third-party.html">Third-party licenses</a>
+      </p>
+    </header>
+
+    <main class="bench">
+      <section class="machine" aria-labelledby="machine-title">
+        <div class="machine-bar">
+          <h2 id="machine-title">Virtual machine</h2>
+          <span class="power" id="power" data-on="false">Off</span>
+          <button type="button" id="power-off" disabled>Power off</button>
+        </div>
+        <div class="screen">
+          <div class="screen-idle" id="screen-idle">
+            <p><strong>No boot media</strong></p>
+            <p>Boot the sample QR, open an image or use your camera.</p>
+          </div>
+          <div class="guest" id="guest" aria-label="Virtual machine display" hidden></div>
+        </div>
+        <p class="keys">Click the display to type, <kbd>Tab</kbd> to release. <kbd>h</kbd> <kbd>Enter</kbd> lists one-letter commands; <kbd>Esc</kbd> returns to the shell.</p>
+      </section>
+
+      <section class="media" id="media" aria-labelledby="media-title">
+        <h2 id="media-title">Boot media</h2>
+        <figure class="source">
+          <div class="source-frame">
+            <img id="sample" alt="QR code containing the QRnel boot image" width="185" height="185" src="./qrnel.png">
+            <video id="preview" aria-label="Camera preview" muted playsinline hidden></video>
+          </div>
+          <figcaption>
+            <span>QR version 40-L</span>
+            <span id="size"></span>
+          </figcaption>
+        </figure>
+        <button type="button" id="boot-sample">Boot this QR</button>
+        <div class="media-actions">
+          <button type="button" id="choose-image">Open image</button>
+          <input type="file" id="image" accept="image/*" hidden>
+          <button type="button" id="camera" aria-pressed="false">Use camera</button>
+        </div>
+        <h3>Last boot attempt</h3>
+        <dl class="verification">
+          <div><dt>Source</dt><dd id="verification-source">—</dd></div>
+          <div><dt>Payload</dt><dd id="verification-payload">—</dd></div>
+          <div><dt>SHA-256</dt><dd id="verification-hash">—</dd></div>
+          <div><dt>Boot medium</dt><dd id="verification-medium"></dd></div>
+          <div><dt>Emulator</dt><dd id="verification-emulator"></dd></div>
+          <div><dt>Status</dt><dd id="verification-status">Idle</dd></div>
+        </dl>
+        <p class="status" id="status" role="status">You can also drop a QR image here.</p>
+      </section>
+    </main>
+    <noscript><p>Turn on JavaScript to scan and boot the QR code.</p></noscript>
+  </div>
+  <script src="./vendor/jsQR.js" defer></script>
+  <script src="./app.js" type="module"></script>
+</body>
+</html>
